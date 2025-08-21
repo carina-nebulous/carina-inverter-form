@@ -1,161 +1,1759 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Inversor</title>
+    <title>Carina - Monitoramento Inteligente de Inversores Solares</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #181825;
-            margin: 0;
-            min-height: 100vh;
-            position: relative;
-            overflow: hidden;
+        /* WordPress Compatibility Fixes */
+        .carina-landing-page * {
+            box-sizing: border-box !important;
         }
-        /* Nebula background */
-        .nebula {
+
+        .carina-landing-page {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+            line-height: 1.6 !important;
+            color: #f2f2f2 !important;
+            background: #0d0d0d !important;
+            overflow-x: hidden !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .carina-landing-page :root {
+            --primary: #052940;
+            --secondary: #bf15b4;
+            --accent: #712473;
+            --dark: #0d0d0d;
+            --light: #f8fafc;
+            --gradient-primary: linear-gradient(135deg, #052940 0%, #712473 50%, #bf15b4 100%);
+            --gradient-secondary: linear-gradient(45deg, #bf15b4 0%, #712473 30%, #052940 70%, #712473 100%);
+            --gradient-nebula: radial-gradient(ellipse at center, rgba(191, 21, 180, 0.3) 0%, rgba(113, 36, 115, 0.2) 40%, rgba(5, 41, 64, 0.1) 100%);
+            --gradient-cosmic: conic-gradient(from 180deg at 50% 50%, #052940 0deg, #712473 120deg, #bf15b4 240deg, #052940 360deg);
+        }
+
+        .carina-landing-page * {
+            box-sizing: border-box !important;
+        }
+
+        .carina-landing-page body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #f2f2f2;
+            background: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .carina-landing-page h1, 
+        .carina-landing-page h2, 
+        .carina-landing-page h3, 
+        .carina-landing-page h4, 
+        .carina-landing-page h5, 
+        .carina-landing-page h6 {
+            color: #f2f2f2 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .carina-landing-page p {
+            color: #f2f2f2 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .carina-landing-page .text-muted {
+            color: #ffffff !important;
+        }
+
+        .carina-landing-page .lead {
+            color: #ffffff !important;
+        }
+
+        .carina-landing-page .lead.text-muted {
+            color: #ffffff !important;
+        }
+
+        /* Header */
+        .carina-landing-page .header {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-            background: radial-gradient(circle at 20% 30%, #6c63ff55 0%, transparent 60%),
-                        radial-gradient(circle at 80% 70%, #ff6c8a55 0%, transparent 60%),
-                        radial-gradient(circle at 50% 80%, #00ffd055 0%, transparent 60%),
-                        radial-gradient(circle at 70% 20%, #ffef6c33 0%, transparent 60%);
+            right: 0;
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(242, 242, 242, 0.2);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
         }
-        header {
-            width: 100%;
-            background: #23233aee;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            padding: 12px 0;
+
+        .carina-landing-page .header.scrolled {
+            background: rgba(13, 13, 13, 0.98);
+            box-shadow: 0 2px 20px rgba(242, 242, 242, 0.2);
+        }
+
+        .carina-landing-page .navbar-brand {
+            font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand .logo-svg {
+            height: 40px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        .navbar-brand .logo-svg .cls-1 {
+            fill: #ffffff;
+        }
+
+        .nav-link {
+            color: #f2f2f2 !important;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem !important;
+            transition: all 0.3s ease;
+            border-radius: 25px;
+            margin: 0 0.25rem;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary) !important;
+            background: rgba(242, 242, 242, 0.1);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: 
+                linear-gradient(rgba(5, 41, 64, 0.85), rgba(13, 13, 13, 0.7)),
+                url('https://lh3.googleusercontent.com/fife/ALs6j_HIVZWr8V46gu4yK_9NYsy7JwN38QxXxgLdjK12hSMEc7NdtPJQ66iGcQPlCHErsKUqpgLj5by8qbEj7KL6YODFE9tSl61AF-A-xwrZsvIKfDGF71HV21Dsv9dBGlyKLEMkESK4Pc1gs3SCrfzS4PJ9iQMh7zgdq0zGA4QMo8YbZACJyt8hI2S5hI76Nau8iSaYL5LujEaU2AaJgiE2Xa46AA8IAcsdYuqUrplRuwPGA--PvrSljsBsaNvQyin5Mv10Y4g5DNyW4krXgQiWp58DaZtkqx90QPHKLnkBRHn9XiujNcNax7F8JuuLiAG4qKm624ai7VfRx-QwAprcor78jwJQG3gkEHq_-0oelxEGow_vk1hdtyue_PL2RMXTusMI_0ufaz4jznShrOKh7ZDlevoKXsrVjoINjNMfUXAj64gVSMR3qgx249Lx-OP2feprXGb6x-TDH3d7f2zVXYbN3mvLUii5tf1JRoQDKwEm9rYOOIxtbV_evbsISNMRxhvg_QJ8focWQo0Qp9x2HiD0EJoH48bcyq00H2wMAYWmtIi98CSc60-E0Y_7qy4ZA8EQkGuuf0YLNd99bVme1B76KdD8Tmja-GldEygBmY9iNv9apmsqHtl7Ssgh3aUAO9Xqian1wHFlekfqqbHyEiqJntrq4nYCTP56XLo-PPxMLq0CWRRfZGqs3UzVwIEvA0hiMemCnDsdoFLdpZzf74y_k4w11309bbVt3Erb_15Kc3idvFk293Vw4_2EuuCh_jlcnUBhEYxSuqLryDZANnj4IaBWGKXImoaZSI-KhfjpXqYFXMWUa6Eg_AnPrKamFFZChj94jt0xmZ8xFvnA_xUX010dqX5FoDW2lzDOlcHY9SsQG8i2WWbG-7CaqL_PmTWCZYiCbjA_12eTt2aXFnHeM6iml9OgC5HnHURV50StVlCSdepKBwyCNTqGcOeNQ3vcEYrcdU4O55HXNTm-Nn7AnuBs7ebBx6b94yQoREPXBKsTBorJb7AjVvzTVOkEXsTs0oy--n3KWavsbjC4pojwhdW9BwKwkOk0DxkdD4JKoHDqNILMOsvbPyYwihVn-rf3F_6hj-t-V2aU6FJgzFRAdMUmYEHT_ivK4gNvPxOU5zUq30W6JP52Z7D1vls3KYYOKHJUnR1Glw7ZeoH-tCoGAsYlP66TZDuDyUxh32KCEENpSYdbwhOUgIX-c247epouwJUts2NU_kV04J51teZr-AwyXaY_xX4IrB90dHxuSbbnX2ajehYbkc2cGKgXN_gihOY8sUVrAjldQPPJWxtArAqfbfJ0GQ0Zy6p9KGXQiNgReRPhqkFnS_smhLXMw-arA4K-tu6fliIfC9stD9PU30V2a6g-bjiDzf7lFv81f3AHIe8aBHQTwJ_d71gnYEHRm4S7QtKKY29RtK__XpEL4S12uaHAuruzcSTb53G_tMt4mEDGGrvojgK266ylE91hJ1kqyWMLgUfcNlAYgq7wRJFFkNNhK4FFQQsTCzowcEKcZ9CrlM37m4S_NsE_GOOFcGksOdwVye6-f5siLpw38cPOmNytIttD68nPauqduaslNsVFuG368jsdtWuitseUsz55TyKKWNUDNGI36a3Jo9rJN9QmmEhbYd_f7pNAocipTWtZ_2VaNIpCr1bhnI6OSbd8l4iiBIeSM4_SNnSkfcwVN51udJBM3rcnqTlVxw=w1365-h633');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 140px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0.7;
+            mix-blend-mode: multiply;
+            z-index: -1;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(191, 21, 180, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(113, 36, 115, 0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 60% 20%, rgba(5, 41, 64, 0.2) 0%, transparent 70%),
+                radial-gradient(ellipse at 40% 80%, rgba(191, 21, 180, 0.15) 0%, transparent 80%);
+            animation: nebulaPulse 8s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 50%, rgba(242, 242, 242, 0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            color: #ffffff !important;
+        }
+
+        .cta-button {
+            background: var(--gradient-secondary);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(242, 242, 242, 0.2);
+            color: white;
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button.secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Countdown Timer */
+        .countdown-container {
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .countdown-title {
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: flex-start;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: 
+                linear-gradient(145deg, rgba(13, 13, 13, 0.8) 0%, rgba(5, 41, 64, 0.3) 100%),
+                radial-gradient(circle at 50% 0%, rgba(191, 21, 180, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 100%, rgba(113, 36, 115, 0.08) 0%, transparent 50%);
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            min-width: 80px;
+            border: 1px solid rgba(242, 242, 242, 0.2);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .countdown-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(255, 255, 255, 0.6);
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        .countdown-label {
+            display: block;
+            font-size: 0.9rem;
+            color: #f2f2f2;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Mobile responsive - single line countdown */
+        @media (max-width: 768px) {
+            .countdown-timer {
+                gap: 0.5rem;
+                justify-content: space-between;
+                flex-wrap: nowrap;
+            }
+            
+            .countdown-item {
+                min-width: 60px;
+                padding: 0.8rem 0.5rem;
+                flex: 1;
+            }
+            
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+
+            .countdown-label {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .countdown-timer {
+                gap: 0.3rem;
+            }
+            
+            .countdown-item {
+                min-width: 50px;
+                padding: 0.6rem 0.3rem;
+            }
+            
+            .countdown-number {
+                font-size: 1.2rem;
+            }
+
+            .countdown-label {
+                font-size: 0.6rem;
+            }
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #0d0d0d 0%, rgba(5, 41, 64, 0.1) 100%);
+        }
+
+        .feature-card {
+            background: 
+                linear-gradient(145deg, rgba(13, 13, 13, 0.8) 0%, rgba(5, 41, 64, 0.3) 100%),
+                radial-gradient(circle at 30% 30%, rgba(113, 36, 115, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(191, 21, 180, 0.05) 0%, transparent 50%);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 4px 20px rgba(242, 242, 242, 0.05);
+            transition: all 0.4s ease;
+            height: 100%;
+            border: 1px solid rgba(242, 242, 242, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-cosmic);
+            opacity: 0;
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.1;
+            transform: rotate(45deg);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(242, 242, 242, 0.15);
+            border-color: rgba(242, 242, 242, 0.4);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            animation: floatingGlow 3s ease-in-out infinite;
+        }
+
+        .feature-icon::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: var(--gradient-cosmic);
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon::after {
+            opacity: 1;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #f2f2f2;
+        }
+
+        .feature-description {
+            color: #f2f2f2;
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 80px 0;
+            background: var(--dark);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(90deg, 
+                    rgba(191, 21, 180, 0.15) 0%, 
+                    rgba(113, 36, 115, 0.1) 25%, 
+                    rgba(5, 41, 64, 0.2) 50%, 
+                    rgba(113, 36, 115, 0.1) 75%, 
+                    rgba(191, 21, 180, 0.15) 100%);
+            background-size: 300% 100%;
+            animation: flowLeftToRight 8s ease-in-out infinite;
+        }
+
+        .stat-item {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: 
+                linear-gradient(45deg, #ffffff 0%, #f2f2f2 25%, #ffffff 50%, #f2f2f2 75%, #ffffff 100%);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(255, 255, 255, 0.6),
+                0 0 30px rgba(255, 255, 255, 0.4),
+                0 0 40px rgba(255, 255, 255, 0.2);
+            animation: glowPulse 3s ease-in-out infinite, gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                text-shadow: 
+                    0 0 10px rgba(255, 255, 255, 0.5),
+                    0 0 20px rgba(255, 255, 255, 0.4),
+                    0 0 30px rgba(255, 255, 255, 0.2),
+                    0 0 40px rgba(255, 255, 255, 0.1);
+            }
+            50% {
+                text-shadow: 
+                    0 0 15px rgba(255, 255, 255, 0.4),
+                    0 0 25px rgba(255, 255, 255, 0.3),
+                    0 0 35px rgba(255, 255, 255, 0.1),
+                    0 0 45px rgba(255, 255, 255, 0);
+            }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            25% {
+                background-position: 50% 25%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            75% {
+                background-position: 50% 75%;
+            }
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+            color: #ffffff;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 80px 0;
+            background: 
+                linear-gradient(135deg, rgba(13, 13, 13, 0.95) 0%, rgba(5, 41, 64, 0.2) 100%),
+                radial-gradient(circle at 30% 70%, rgba(191, 21, 180, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(113, 36, 115, 0.06) 0%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, transparent 49%, rgba(242, 242, 242, 0.02) 50%, transparent 51%),
+                linear-gradient(-45deg, transparent 49%, rgba(242, 242, 242, 0.02) 50%, transparent 51%);
+            background-size: 50px 50px;
+            animation: floatingParticles 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .testimonial-card {
+            background: 
+                linear-gradient(145deg, rgba(13, 13, 13, 0.8) 0%, rgba(5, 41, 64, 0.3) 100%),
+                radial-gradient(circle at 20% 80%, rgba(191, 21, 180, 0.1) 0%, transparent 50%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(242, 242, 242, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-cosmic);
+            opacity: 0;
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+
+        .testimonial-card:hover::before {
+            opacity: 0.05;
+            transform: rotate(45deg);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(242, 242, 242, 0.15);
+            border-color: rgba(242, 242, 242, 0.4);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+            margin-right: 1rem;
+            position: relative;
+            animation: floatingGlow 3s ease-in-out infinite;
+        }
+
+        .testimonial-info h4 {
+            color: #f2f2f2;
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .testimonial-info .company {
+            color: rgba(242, 242, 242, 0.7);
+            font-size: 0.9rem;
+            margin-top: 0.2rem;
+        }
+
+        .testimonial-role {
+            background: linear-gradient(45deg, rgba(191, 21, 180, 0.2), rgba(113, 36, 115, 0.2));
+            color: #f2f2f2;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(242, 242, 242, 0.3);
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            padding: 80px 0;
+            background: 
+                linear-gradient(135deg, rgba(13, 13, 13, 0.9) 0%, rgba(5, 41, 64, 0.2) 100%),
+                radial-gradient(circle at 20% 20%, rgba(113, 36, 115, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(191, 21, 180, 0.05) 0%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(191, 21, 180, 0.4), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(113, 36, 115, 0.3), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(5, 41, 64, 0.3), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(191, 21, 180, 0.3), transparent);
+            background-repeat: repeat;
+            background-size: 150px 120px;
+            animation: floatingParticles 15s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatingParticles {
+            0% {
+                transform: translateY(0px) translateX(0px);
+            }
+            33% {
+                transform: translateY(-10px) translateX(5px);
+            }
+            66% {
+                transform: translateY(-5px) translateX(-3px);
+            }
+            100% {
+                transform: translateY(0px) translateX(0px);
+            }
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .benefit-item:hover {
+            background: linear-gradient(135deg, rgba(242, 242, 242, 0.08) 0%, rgba(242, 242, 242, 0.04) 100%);
+            transform: translateX(15px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(242, 242, 242, 0.1);
+        }
+
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: var(--gradient-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .benefit-content h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #f2f2f2;
+        }
+
+        .benefit-content p {
+            color: #f2f2f2;
+            margin: 0;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center !important;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center !important;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            text-align: center !important;
+        }
+
+        .cta-section .container {
+            text-align: center !important;
+        }
+
+        .cta-section .cta-button {
+            display: inline-block !important;
+            margin: 0 auto !important;
+        }
+
+        /* Contact Form */
+        .contact-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(13, 13, 13, 0.95) 0%, rgba(5, 41, 64, 0.3) 100%);
+        }
+
+        .contact-section .form-label {
+            color: #ffffff;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            border: 2px solid rgba(242, 242, 242, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(13, 13, 13, 0.8);
+            color: #f2f2f2;
+        }
+
+        .form-control::placeholder {
+            color: rgba(242, 242, 242, 0.5);
+        }
+
+        .form-control:focus {
+            border-color: #f2f2f2;
+            box-shadow: 0 0 0 0.2rem rgba(242, 242, 242, 0.3);
+            background: rgba(13, 13, 13, 0.9);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(242, 242, 242, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .footer h5 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            z-index: 2;
+        }
+
+        @media (max-width: 767px) {
+            .footer h5 {
+                justify-content: center;
+            }
+        }
+
+        .footer .logo-svg {
+            height: 35px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer .logo-svg .cls-1 {
+            fill: #ffffff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .feature-card {
+                margin: 1rem 0;
+            }
+
+            .benefit-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .benefit-icon {
+                margin: 0 auto 1rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes nebulaPulse {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0.6;
+            }
+            50% {
+                transform: scale(1.1) rotate(2deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1.05) rotate(-1deg);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes cosmicRotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes flowLeftToRight {
+            0% {
+                background-position: -200% 0;
+            }
+            50% {
+                background-position: 0% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        @keyframes floatingGlow {
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(191, 21, 180, 0.2);
+                transform: translateY(0px);
+            }
+            50% {
+                box-shadow: 0 8px 30px rgba(191, 21, 180, 0.4);
+                transform: translateY(-5px);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Dashboard Preview */
+        .dashboard-preview {
+            background: 
+                linear-gradient(145deg, rgba(13, 13, 13, 0.9) 0%, rgba(5, 41, 64, 0.3) 100%),
+                radial-gradient(ellipse at 20% 20%, rgba(191, 21, 180, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(113, 36, 115, 0.08) 0%, transparent 60%),
+                conic-gradient(from 45deg at 50% 50%, rgba(5, 41, 64, 0.05) 0deg, rgba(113, 36, 115, 0.03) 120deg, rgba(191, 21, 180, 0.02) 240deg, rgba(5, 41, 64, 0.05) 360deg);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 15px 50px rgba(242, 242, 242, 0.1);
+            border: 2px solid transparent;
+            background-clip: padding-box;
             position: relative;
         }
-        .logo {
-            height: 40px;
-            margin-left: 32px;
-            filter: drop-shadow(0 0 6px #6c63ff88);
+
+        .dashboard-preview::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 22px;
+            background: var(--gradient-cosmic);
+            z-index: -1;
+            animation: cosmicRotate 10s linear infinite;
         }
-        .main-content {
+
+        /* Dashboard Carousel */
+        .dashboard-carousel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-slide {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .dashboard-slide.active {
+            opacity: 1;
+            position: relative;
+        }
+
+        /* Status Colors */
+        .status-healthy .status-dot {
+            background: #10b981;
+        }
+
+        .status-risk .status-dot {
+            background: #f59e0b;
+        }
+
+        .status-alert .status-dot {
+            background: #ef4444;
+        }
+
+        .status-healthy .metric-value {
+            color: #10b981;
+        }
+
+        .status-risk .metric-value {
+            color: #f59e0b;
+        }
+
+        .status-alert .metric-value {
+            color: #ef4444;
+        }
+
+        .dashboard-header {
             display: flex;
-            justify-content: center;
             align-items: center;
-            min-height: calc(100vh - 64px);
-            padding: 16px;
-            z-index: 1;
-            position: relative;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(242, 242, 242, 0.3);
         }
-        .container {
-            background: #23233ad9;
-            padding: 32px 24px;
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        .dashboard-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .metric-card {
+            background: 
+                linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%),
+                radial-gradient(circle at 30% 30%, rgba(5, 41, 64, 0.02) 0%, transparent 50%);
             border-radius: 12px;
-            box-shadow: 0 2px 16px rgba(108,99,255,0.15);
-            width: 100%;
-            max-width: 400px;
-            color: #f3f3fa;
-        }
-        h2 {
+            padding: 1.5rem;
             text-align: center;
-            margin-bottom: 24px;
-            color: #c7bfff;
-            text-shadow: 0 0 8px #6c63ff44;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(5, 41, 64, 0.1);
         }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #b3b3d1;
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
         }
-        select, input[type="email"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 16px;
-            border: 1px solid #6c63ff55;
-            border-radius: 6px;
-            background: #181825;
-            color: #f3f3fa;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        select:focus, input:focus {
-            outline: 2px solid #6c63ff;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(90deg, #6c63ff 0%, #ff6c8a 100%);
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-size: 17px;
-            cursor: pointer;
-            box-shadow: 0 2px 8px #6c63ff33;
-            transition: background 0.2s;
-        }
-        button:hover {
-            background: linear-gradient(90deg, #ff6c8a 0%, #6c63ff 100%);
-        }
-        @media (max-width: 600px) {
-            header {
-                padding: 8px 0;
-            }
-            .logo {
-                height: 32px;
-                margin-left: 12px;
-            }
-            .main-content {
-                padding: 8px;
-                min-height: calc(100vh - 48px);
-            }
-            .container {
-                padding: 20px 8px;
-                max-width: 100%;
-                box-shadow: none;
-                border-radius: 0;
-            }
-            h2 {
-                font-size: 1.2rem;
-            }
-            button {
-                font-size: 15px;
-                padding: 10px;
-            }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
         }
     </style>
 </head>
 <body>
-    <div class="nebula"></div>
-    <header>
-        <img src="logo.png" alt="Logo" class="logo">
-    </header>
-    <div class="main-content">
+<div class="carina-landing-page">
+    <!-- Header -->
+    <nav class="header navbar navbar-expand-lg">
         <div class="container">
-            <h2>Selecione o Inversor</h2>
-            <form>
-                <label for="fabricante">Fabricante do Inversor</label>
-                <select id="fabricante" name="fabricante" required>
-                    <option value="">Selecione...</option>
-                    <option value="FabricaA">Fabrica A</option>
-                    <option value="FabricaB">Fabrica B</option>
-                    <option value="FabricaC">Fabrica C</option>
-                </select>
-
-                <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="senha">Senha</label>
-                <input type="password" id="senha" name="senha" required>
-
-                <button type="submit">Enviar</button>
-            </form>
+            <a class="navbar-brand" href="#home">
+                <svg class="logo-svg" id="Camada_2" data-name="Camada 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4293.7 675.82">
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: #ffffff;
+                            }
+                        </style>
+                    </defs>
+                    <g id="Camada_1-2" data-name="Camada 1">
+                        <g>
+                            <path class="cls-1" d="M0,536.82V139.11L139.02.09h442.13v122.61H205.63l-65.65,65.63v299.26l65.65,65.65h375.51v122.59H139.02L0,536.82Z"/>
+                            <polygon class="cls-1" points="1385.2 632.39 1385.2 675.73 1250.06 675.73 1188.64 525.18 1138.53 402.56 1024.13 122.62 1004 122.62 889.19 402.56 838.87 525.18 777.05 675.73 645.8 675.73 645.8 632.39 915.07 0 1114.91 0 1385.2 632.39"/>
+                            <path class="cls-1" d="M1496.24.09h493.27l125.5,125.5v198.85l-116.79,116.81,138.03,191.13v43.44h-137.07l-156.39-222.02h-206.57v222.02h-139.98V.09ZM1917.13,336.99l57.93-57.93v-104.24l-57.93-57.93h-280.9v220.09h280.9Z"/>
+                            <path class="cls-1" d="M2234.71,564.8h135.15V111.11h-135.15V.09h410.25v111.02h-135.15v453.7h135.15v111.02h-410.25v-111.02Z"/>
+                            <path class="cls-1" d="M2787.82.09h222.02l282.85,528.03h14.48V.09h136.11v675.73h-222.02l-282.85-528.03h-14.48v528.03h-136.11V.09Z"/>
+                            <polygon class="cls-1" points="4293.7 632.39 4293.7 675.73 4158.55 675.73 4097.14 525.18 4047.02 402.56 3932.62 122.62 3912.5 122.62 3797.68 402.56 3747.36 525.18 3685.54 675.73 3554.3 675.73 3554.3 632.39 3823.56 0 4023.4 0 4293.7 632.39"/>
+                        </g>
+                    </g>
+                </svg>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#recursos">Recursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#beneficios">Benefícios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contato">Contato</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            <span style="text-decoration: line-through; color: rgba(255, 255, 255, 0.8); text-decoration-color: #bf15b4; text-decoration-thickness: 3px;">Monitore</span> Gerencie o seu sistema solar com 
+                            <span>inteligência via WhatsApp</span> 
+             
+                        </h1>
+                        <p class="hero-subtitle">
+                            Controle até 26 informações do seu sistema solar e tome decisões inteligentes sobre sua geração solar com análises preditivas avançadas. 
+                        </p>
+                        
+                        <!-- WhatsApp Highlight -->
+                
+                        
+                        <!-- Countdown Timer -->
+                        <div class="countdown-container">
+                            <div class="countdown-title">Lançamento oficial em:</div>
+                            <div class="countdown-timer" id="countdown">
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="days">00</span>
+                                    <span class="countdown-label">Dias</span>
+                                </div>
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="hours">00</span>
+                                    <span class="countdown-label">Horas</span>
+                                </div>
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="minutes">00</span>
+                                    <span class="countdown-label">Minutos</span>
+                                </div>
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="seconds">00</span>
+                                    <span class="countdown-label">Segundos</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex flex-wrap">
+                            <a href="#contato" class="cta-button">
+                                <i class="fas fa-rocket me-2"></i>Começar Agora
+                            </a>
+                            <a href="#recursos" class="cta-button secondary">
+                                <i class="fas fa-play me-2"></i>Ver Demonstração
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="dashboard-preview">
+                        <div class="dashboard-carousel">
+                            <!-- Slide 1: Sistema Saudável -->
+                            <div class="dashboard-slide active status-healthy">
+                                <div class="dashboard-header">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-chart-line me-2"></i>
+                                        Dashboard Carina
+                                    </h5>
+                                    <div class="status-indicator">
+                                        <div class="status-dot"></div>
+                                        <span>Sistema Saudável</span>
+                                    </div>
+                                </div>
+                                <div class="dashboard-metrics">
+                                    <div class="metric-card">
+                                        <div class="metric-value">98%</div>
+                                        <div class="metric-label">Saúde do Sistema</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-value">5.2kW</div>
+                                        <div class="metric-label">Potência Atual</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-value">32°C</div>
+                                        <div class="metric-label">Temperatura</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-value">26</div>
+                                        <div class="metric-label">Parâmetros Monitorados</div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <small class="text-muted">
+                                        <i class="fas fa-shield-alt me-1"></i>
+                                        Monitoramento em tempo real
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Slide 2: Sistema em Risco -->
+                            <div class="dashboard-slide status-risk">
+                                <div class="dashboard-header">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-chart-line me-2"></i>
+                                        Dashboard Carina
+                                    </h5>
+                                    <div class="status-indicator">
+                                        <div class="status-dot"></div>
+                                        <span>Sistema em Risco</span>
+                                    </div>
+                                </div>
+                                <div class="dashboard-metrics">
+                                    <div class="metric-card">
+                                        <div class="metric-value">67%</div>
+                                        <div class="metric-label">Saúde do Sistema</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-value">3.8kW</div>
+                                        <div class="metric-label">Potência Atual</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-value">45°C</div>
+                                        <div class="metric-label">Temperatura</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-value">18</div>
+                                        <div class="metric-label">Parâmetros Monitorados</div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <small class="text-muted">
+                                        <i class="fas fa-exclamation-triangle me-1"></i>
+                                        Atenção necessária
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Slide 3: Sistema em Alerta -->
+                            <div class="dashboard-slide status-alert">
+                                <div class="dashboard-header">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-chart-line me-2"></i>
+                                        Dashboard Carina
+                                    </h5>
+                                    <div class="status-indicator">
+                                        <div class="status-dot"></div>
+                                        <span>Sistema em Alerta</span>
+                                    </div>
+                                </div>
+                                <div class="dashboard-metrics">
+                                    <div class="metric-card">
+                                        <div class="metric-value">23%</div>
+                                        <div class="metric-label">Saúde do Sistema</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-value">1.2kW</div>
+                                        <div class="metric-label">Potência Atual</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-value">58°C</div>
+                                        <div class="metric-label">Temperatura</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-value">8</div>
+                                        <div class="metric-label">Parâmetros Monitorados</div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <small class="text-muted">
+                                        <i class="fas fa-times-circle me-1"></i>
+                                        Intervenção urgente
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stat-item">
+                        <span class="stat-number">26</span>
+                        <div class="stat-label">Parâmetros Monitorados</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <div class="stat-label">Monitoramento Contínuo</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-item">
+                        <span class="stat-number">99%</span>
+                        <div class="stat-label">Precisão nas Análises</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-item">
+                        <span class="stat-number">15min</span>
+                        <div class="stat-label">Detecção de Falhas</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold mb-3" style="background: linear-gradient(135deg, #f2f2f2 0%, rgba(242, 242, 242, 0.8) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Quem está usando</h2>
+                <p class="lead text-muted">Profissionais e empresas que já confiam na Carina</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">
+                                RV
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Rogério Vilela</h4>
+                                <div class="company">Inteligência LTDA</div>
+                            </div>
+                        </div>
+                        <div class="testimonial-role">
+                            💼 Empresário
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">
+                                AM
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Alexandre Mainardi</h4>
+                                <div class="company">Nuvem UAV</div>
+                            </div>
+                        </div>
+                        <div class="testimonial-role">
+                            🚁 CEO & Founder
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">
+                                IF
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Influenciador</h4>
+                                <div class="company">de Finanças</div>
+                            </div>
+                        </div>
+                        <div class="testimonial-role">
+                            📈 Educador Financeiro
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="recursos" class="features-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold mb-3" style="background: linear-gradient(135deg, #f2f2f2 0%, rgba(242, 242, 242, 0.8) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    Recursos Inteligentes 
+                    <span style="color: #25d366; font-size: 0.7em; display: block;">via WhatsApp</span>
+                </h2>
+                <p class="lead text-muted">Monitore, analise e otimize sua geração solar direto no seu WhatsApp</p>
+            </div>
+            
+            <div class="row">
+                <!-- WhatsApp Feature - DESTAQUE -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card" style="border: 3px solid #25d366; background: linear-gradient(145deg, rgba(37, 211, 102, 0.1) 0%, rgba(13, 13, 13, 0.9) 100%); position: relative;">
+                        <div style="position: absolute; top: -10px; right: -10px; background: #25d366; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">
+                            🔥 EXCLUSIVO
+                        </div>
+                        <div class="feature-icon" style="background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h3 class="feature-title" style="color: #25d366;">📱 Monitoramento via WhatsApp</h3>
+                        <p class="feature-description">
+                            Receba alertas em tempo real, relatórios diários e análises completas direto no seu WhatsApp. Simples, prático e sempre no seu bolso!
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h3 class="feature-title">Saúde do Sistema</h3>
+                        <p class="feature-description">
+                            Monitore em tempo real a saúde completa dos seus inversores com diagnósticos precisos e alertas proativos.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-broom"></i>
+                        </div>
+                        <h3 class="feature-title">Momento Ideal para Limpeza</h3>
+                        <p class="feature-description">
+                            Receba notificações automáticas sobre o melhor momento para limpeza dos painéis, maximizando a eficiência.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="feature-title">Análises Preditivas</h3>
+                        <p class="feature-description">
+                            Antecipe problemas futuros com nossa IA que prevê possíveis quedas de performance e falhas.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="feature-title">Detecção de Disjuntores</h3>
+                        <p class="feature-description">
+                            Identifique imediatamente quedas de disjuntores e problemas elétricos antes que afetem a geração.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3 class="feature-title">Análise Comparativa</h3>
+                        <p class="feature-description">
+                            Compare sua performance com o projeto original e sistemas similares na sua região.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Validação de Vendas</h3>
+                        <p class="feature-description">
+                            Descubra se você foi "tapeado" pelo vendedor comparando a performance real com as promessas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="beneficios" class="benefits-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold mb-3" style="background: linear-gradient(135deg, #f2f2f2 0%, rgba(242, 242, 242, 0.8) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Por que escolher a Carina?</h2>
+                <p class="lead text-muted">Transforme dados em insights valiosos para otimizar sua geração solar</p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Economize até 30% na Manutenção</h4>
+                            <p>Com manutenção preditiva, evite custos desnecessários e maximize o ROI do seu sistema solar.</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Detecção em 15 Minutos</h4>
+                            <p>Problemas são identificados em tempo recorde, minimizando perdas na geração de energia.</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Acesso de Qualquer Lugar</h4>
+                            <p>Dashboard responsivo que funciona perfeitamente em computadores, tablets e smartphones.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Inteligência Artificial Avançada</h4>
+                            <p>Algoritmos de machine learning analisam padrões e preveem comportamentos futuros.</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Relatórios Detalhados</h4>
+                            <p>Relatórios automáticos com insights valiosos enviados diretamente para seu email.</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Suporte Especializado</h4>
+                            <p>Equipe técnica especializada disponível para auxiliar na interpretação dos dados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container text-center">
+            <h2 style="background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Pronto para revolucionar seu monitoramento solar?</h2>
+            <p>
+                Junte-se a centenas de clientes que já estão economizando com o monitoramento inteligente da Carina. 
+                Entre na fila de espera de atendimento.
+            </p>
+            <a href="#contato" class="cta-button">
+                <i class="fas fa-rocket me-2"></i>Começar Teste Freemium
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="contact-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold mb-3" style="background: linear-gradient(135deg, #f2f2f2 0%, rgba(242, 242, 242, 0.8) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Entre na fila da atendimento</h2>
+                <p class="lead text-muted">Pronto para otimizar sua geração solar? Fale conosco!</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form class="row g-4">
+                        <div class="col-md-6">
+                            <label for="nome" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="nome" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="telefone" class="form-label">Telefone</label>
+                            <input type="tel" class="form-control" id="telefone">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="empresa" class="form-label">Empresa</label>
+                            <input type="text" class="form-control" id="empresa">
+                        </div>
+                        <div class="col-12">
+                            <label for="mensagem" class="form-label">Como podemos ajudar?</label>
+                            <textarea class="form-control" id="mensagem" rows="4" placeholder="Conte-nos sobre seu sistema solar atual..."></textarea>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i>Enviar Solicitação
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>
+                        <svg class="logo-svg" id="Camada_2" data-name="Camada 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4293.7 675.82">
+                            <defs>
+                                <style>
+                                    .cls-1 {
+                                        fill: #ffffff;
+                                    }
+                                </style>
+                            </defs>
+                            <g id="Camada_1-2" data-name="Camada 1">
+                                <g>
+                                    <path class="cls-1" d="M0,536.82V139.11L139.02.09h442.13v122.61H205.63l-65.65,65.63v299.26l65.65,65.65h375.51v122.59H139.02L0,536.82Z"/>
+                                    <polygon class="cls-1" points="1385.2 632.39 1385.2 675.73 1250.06 675.73 1188.64 525.18 1138.53 402.56 1024.13 122.62 1004 122.62 889.19 402.56 838.87 525.18 777.05 675.73 645.8 675.73 645.8 632.39 915.07 0 1114.91 0 1385.2 632.39"/>
+                                    <path class="cls-1" d="M1496.24.09h493.27l125.5,125.5v198.85l-116.79,116.81,138.03,191.13v43.44h-137.07l-156.39-222.02h-206.57v222.02h-139.98V.09ZM1917.13,336.99l57.93-57.93v-104.24l-57.93-57.93h-280.9v220.09h280.9Z"/>
+                                    <path class="cls-1" d="M2234.71,564.8h135.15V111.11h-135.15V.09h410.25v111.02h-135.15v453.7h135.15v111.02h-410.25v-111.02Z"/>
+                                    <path class="cls-1" d="M2787.82.09h222.02l282.85,528.03h14.48V.09h136.11v675.73h-222.02l-282.85-528.03h-14.48v528.03h-136.11V.09Z"/>
+                                    <polygon class="cls-1" points="4293.7 632.39 4293.7 675.73 4158.55 675.73 4097.14 525.18 4047.02 402.56 3932.62 122.62 3912.5 122.62 3797.68 402.56 3747.36 525.18 3685.54 675.73 3554.3 675.73 3554.3 632.39 3823.56 0 4023.4 0 4293.7 632.39"/>
+                                </g>
+                            </g>
+                        </svg>
+                    </h5>
+                    <p>Monitoramento inteligente de inversores solares</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2025 Carina. Todos os direitos reservados.</p>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = document.querySelector('.header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all feature cards and benefit items
+        document.querySelectorAll('.feature-card, .benefit-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate form submission
+            const button = this.querySelector('button[type="submit"]');
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Enviando...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.innerHTML = '<i class="fas fa-check me-2"></i>Mensagem Enviada!';
+                button.style.background = '#10b981';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    button.style.background = '';
+                    this.reset();
+                }, 2000);
+            }, 2000);
+        });
+
+        // Countdown Timer
+        function startCountdown() {
+            // Target date: October 1, 2025
+            const targetDate = new Date('2025-10-01T00:00:00').getTime();
+            
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+                
+                if (distance > 0) {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+                } else {
+                    // Countdown finished
+                    document.getElementById('days').textContent = '00';
+                    document.getElementById('hours').textContent = '00';
+                    document.getElementById('minutes').textContent = '00';
+                    document.getElementById('seconds').textContent = '00';
+                    
+                    // Update countdown title
+                    document.querySelector('.countdown-title').textContent = 'Lançamento disponível!';
+                }
+            }
+            
+            // Update immediately and then every second
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+        
+        // Start countdown when page loads
+        document.addEventListener('DOMContentLoaded', startCountdown);
+
+        // Dashboard Carousel
+        function initDashboardCarousel() {
+            const slides = document.querySelectorAll('.dashboard-slide');
+            let currentSlide = 0;
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === index) {
+                        slide.classList.add('active');
+                    }
+                });
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            // Auto-advance every 4 seconds
+            setInterval(nextSlide, 4000);
+        }
+
+        // Start carousel when page loads
+        document.addEventListener('DOMContentLoaded', initDashboardCarousel);
+    </script>
+</div>
 </body>
 </html>

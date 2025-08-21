@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Inversor</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: #140024;
+            margin: 0;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .nebula {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 30% 40%, #6c1e7c 0%, transparent 60%),
+                radial-gradient(circle at 70% 60%, #3d0066 0%, transparent 60%),
+                radial-gradient(circle at 60% 80%, #a259f7 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, #ff6c8a 0%, transparent 60%),
+                linear-gradient(120deg, #140024 0%, #2a0a3c 100%);
+        }
+        .dots {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            z-index: 2;
+            opacity: 0.4;
+        }
+        .dots.right {
+            top: 30%;
+            right: 8%;
+        }
+        .dots.left {
+            bottom: 10%;
+            left: 8%;
+        }
+        .header-bar {
+            width: 100%;
+            background: rgba(20,0,36,0.95);
+            box-shadow: 0 2px 16px #6c1e7c33;
+            padding: 0 0 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10;
+            position: relative;
+            height: 70px;
+        }
+        .header-bar .logo {
+            height: 38px;
+            margin-left: 32px;
+            filter: drop-shadow(0 0 6px #a259f7);
+        }
+        .header-bar nav {
+            display: flex;
+            gap: 32px;
+            margin-right: 40px;
+        }
+        .header-bar nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: color 0.2s;
+        }
+        .header-bar nav a:hover {
+            color: #a259f7;
+        }
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 70px);
+            z-index: 2;
+            position: relative;
+            gap: 48px;
+        }
+        .text-side {
+            flex: 1 1 0;
+            max-width: 480px;
+            color: #fff;
+            padding: 0 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .text-side h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 24px #6c1e7c, 0 0 32px #a259f7;
+        }
+        .text-side h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 24px;
+            color: #fff;
+            opacity: 0.85;
+        }
+        .text-side p {
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        .text-side .cta {
+            display: inline-block;
+            padding: 12px 32px;
+            background: linear-gradient(90deg, #6c1e7c 0%, #a259f7 100%);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 2px 16px #a259f733;
+            transition: background 0.2s, transform 0.2s;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+        .text-side .cta:hover {
+            background: linear-gradient(90deg, #a259f7 0%, #6c1e7c 100%);
+            transform: translateY(-2px) scale(1.01);
+        }
+        .form-side {
+            flex: 1 1 0;
+            max-width: 420px;
+            background: rgba(20,0,36,0.92);
+            padding: 40px 32px;
+            border-radius: 18px;
+            box-shadow: 0 2px 32px #6c1e7c55;
+            color: #fff;
+            border: 1px solid #6c1e7c55;
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .form-side h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 24px #6c1e7c, 0 0 32px #a259f7;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        select, input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 2px solid #6c1e7c;
+            border-radius: 10px;
+            background: rgba(44,0,66,0.8);
+            color: #fff;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border 0.2s;
+        }
+        select:focus, input:focus {
+            outline: none;
+            border-color: #a259f7;
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #6c1e7c 0%, #a259f7 100%);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 2px 16px #6c1e7c33;
+            transition: background 0.2s, transform 0.2s;
+            letter-spacing: 1px;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #a259f7 0%, #6c1e7c 100%);
+            transform: translateY(-2px) scale(1.01);
+        }
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+                gap: 24px;
+                padding: 32px 0;
+                align-items: center;
+            }
+            .text-side, .form-side {
+                max-width: 100%;
+                align-items: center;
+            }
+            .text-side {
+                align-items: center;
+                text-align: center;
+            }
+        }
+        @media (max-width: 600px) {
+            .header-bar {
+                height: 56px;
+            }
+            .header-bar .logo {
+                height: 28px;
+                margin-left: 12px;
+            }
+            .header-bar nav {
+                gap: 16px;
+                margin-right: 12px;
+            }
+            .main-content {
+                flex-direction: column;
+                gap: 16px;
+                padding: 16px 0;
+            }
+            .text-side {
+                padding: 0 8px;
+            }
+            .form-side {
+                padding: 20px 8px;
+                box-shadow: none;
+                border-radius: 10px;
+            }
+            .form-side h2 {
+                font-size: 1.3rem;
+            }
+            button {
+                font-size: 1rem;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+        <div class="nebula"></div>
+        <svg class="dots right" viewBox="0 0 80 80">
+          <g fill="none" stroke="#fff" stroke-width="2" opacity="0.5">
+            <circle cx="10" cy="10" r="1.5"/>
+            <circle cx="30" cy="10" r="1.5"/>
+            <circle cx="50" cy="10" r="1.5"/>
+            <circle cx="70" cy="10" r="1.5"/>
+            <circle cx="10" cy="30" r="1.5"/>
+            <circle cx="30" cy="30" r="1.5"/>
+            <circle cx="50" cy="30" r="1.5"/>
+            <circle cx="70" cy="30" r="1.5"/>
+            <circle cx="10" cy="50" r="1.5"/>
+            <circle cx="30" cy="50" r="1.5"/>
+            <circle cx="50" cy="50" r="1.5"/>
+            <circle cx="70" cy="50" r="1.5"/>
+            <circle cx="10" cy="70" r="1.5"/>
+            <circle cx="30" cy="70" r="1.5"/>
+            <circle cx="50" cy="70" r="1.5"/>
+            <circle cx="70" cy="70" r="1.5"/>
+          </g>
+        </svg>
+        <svg class="dots left" viewBox="0 0 80 80">
+          <g fill="none" stroke="#fff" stroke-width="2" opacity="0.5">
+            <circle cx="10" cy="10" r="1.5"/>
+            <circle cx="30" cy="10" r="1.5"/>
+            <circle cx="50" cy="10" r="1.5"/>
+            <circle cx="70" cy="10" r="1.5"/>
+            <circle cx="10" cy="30" r="1.5"/>
+            <circle cx="30" cy="30" r="1.5"/>
+            <circle cx="50" cy="30" r="1.5"/>
+            <circle cx="70" cy="30" r="1.5"/>
+            <circle cx="10" cy="50" r="1.5"/>
+            <circle cx="30" cy="50" r="1.5"/>
+            <circle cx="50" cy="50" r="1.5"/>
+            <circle cx="70" cy="50" r="1.5"/>
+            <circle cx="10" cy="70" r="1.5"/>
+            <circle cx="30" cy="70" r="1.5"/>
+            <circle cx="50" cy="70" r="1.5"/>
+            <circle cx="70" cy="70" r="1.5"/>
+          </g>
+        </svg>
+        <div class="header-bar">
+            <img src="logo.png" alt="Logo" class="logo">
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Sobre</a>
+                <a href="#">Plug-ins</a>
+                <a href="#">Contato</a>
+            </nav>
+        </div>
+        <div class="main-content">
+            <div class="text-side">
+                <h1>Monitoramento Inteligente de Inversores Solares</h1>
+                <h2>Automatize, conecte e monitore sua geração solar com tecnologia de ponta.</h2>
+                <p>
+                    A Carina conecta diferentes fabricantes de inversores solares em uma única plataforma, facilitando o acompanhamento, análise e automação dos dados de geração. Tenha controle total, alertas inteligentes e integração com sistemas de gestão, tudo em um ambiente seguro e intuitivo.
+                </p>
+                <a href="#" class="cta">Saiba Mais</a>
+            </div>
+            <div class="form-side">
+                <h2>Acesse sua conta</h2>
+                <form>
+                    <label for="fabricante">Fabricante do Inversor</label>
+                    <select id="fabricante" name="fabricante" required>
+                        <option value="">Selecione...</option>
+                        <option value="FabricaA">Fabrica A</option>
+                        <option value="FabricaB">Fabrica B</option>
+                        <option value="FabricaC">Fabrica C</option>
+                    </select>
+
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" required>
+
+                    <button type="submit">Entrar</button>
+                </form>
+            </div>
+        </div>
+</body>
+</html>
