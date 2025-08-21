@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Inversor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #181825;
+            margin: 0;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Nebula background */
+        .nebula {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 20% 30%, #6c63ff55 0%, transparent 60%),
+                        radial-gradient(circle at 80% 70%, #ff6c8a55 0%, transparent 60%),
+                        radial-gradient(circle at 50% 80%, #00ffd055 0%, transparent 60%),
+                        radial-gradient(circle at 70% 20%, #ffef6c33 0%, transparent 60%);
+        }
+        header {
+            width: 100%;
+            background: #23233aee;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            z-index: 2;
+            position: relative;
+        }
+        .logo {
+            height: 40px;
+            margin-left: 32px;
+            filter: drop-shadow(0 0 6px #6c63ff88);
+        }
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 64px);
+            padding: 16px;
+            z-index: 1;
+            position: relative;
+        }
+        .container {
+            background: #23233ad9;
+            padding: 32px 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px rgba(108,99,255,0.15);
+            width: 100%;
+            max-width: 400px;
+            color: #f3f3fa;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #c7bfff;
+            text-shadow: 0 0 8px #6c63ff44;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #b3b3d1;
+        }
+        select, input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #6c63ff55;
+            border-radius: 6px;
+            background: #181825;
+            color: #f3f3fa;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        select:focus, input:focus {
+            outline: 2px solid #6c63ff;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, #6c63ff 0%, #ff6c8a 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #6c63ff33;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #ff6c8a 0%, #6c63ff 100%);
+        }
+        @media (max-width: 600px) {
+            header {
+                padding: 8px 0;
+            }
+            .logo {
+                height: 32px;
+                margin-left: 12px;
+            }
+            .main-content {
+                padding: 8px;
+                min-height: calc(100vh - 48px);
+            }
+            .container {
+                padding: 20px 8px;
+                max-width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            h2 {
+                font-size: 1.2rem;
+            }
+            button {
+                font-size: 15px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nebula"></div>
+    <header>
+        <img src="logo.png" alt="Logo" class="logo">
+    </header>
+    <div class="main-content">
+        <div class="container">
+            <h2>Selecione o Inversor</h2>
+            <form>
+                <label for="fabricante">Fabricante do Inversor</label>
+                <select id="fabricante" name="fabricante" required>
+                    <option value="">Selecione...</option>
+                    <option value="FabricaA">Fabrica A</option>
+                    <option value="FabricaB">Fabrica B</option>
+                    <option value="FabricaC">Fabrica C</option>
+                </select>
+
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" required>
+
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
