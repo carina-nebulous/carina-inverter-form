@@ -166,7 +166,7 @@
             color: #fff;
             letter-spacing: 1px;
         }
-        select, input[type="email"], input[type="password"] {
+        select, input[type="email"], input[type="password"], input[type="tel"] {
             width: 100%;
             padding: 14px;
             margin-bottom: 18px;
@@ -176,11 +176,13 @@
             color: #fff;
             box-sizing: border-box;
             font-size: 16px;
-            transition: border 0.2s;
+            font-family: 'Montserrat', Arial, sans-serif;
+            transition: border 0.2s, box-shadow 0.2s;
         }
         select:focus, input:focus {
             outline: none;
             border-color: #a259f7;
+            box-shadow: 0 0 8px #a259f7;
         }
         button {
             width: 100%;
@@ -322,14 +324,35 @@
                         <option value="FabricaC">Fabrica C</option>
                     </select>
 
+                    <label for="celular">Celular</label>
+                    <input type="tel" id="celular" name="celular" required>
+
                     <label for="email">E-mail</label>
                     <input type="email" id="email" name="email" required>
 
                     <label for="senha">Senha</label>
                     <input type="password" id="senha" name="senha" required>
 
+                    <div style="margin-bottom:18px; display:flex; align-items:center;">
+                        <input type="checkbox" id="termos" name="termos" required style="margin-right:10px; accent-color:#a259f7; width:18px; height:18px;">
+                        <label for="termos" style="margin:0; color:#e0e0e0; font-size:0.98rem;">Aceito os <a href="#" style="color:#a259f7; text-decoration:underline;">termos e condições</a></label>
+                    </div>
                     <button type="submit">Entrar</button>
                 </form>
+                <script>
+                // Preenche o campo celular com o valor da query string ?celular=xxxx
+                window.addEventListener('DOMContentLoaded', function() {
+                    function getQueryParam(param) {
+                        const params = new URLSearchParams(window.location.search);
+                        return params.get(param);
+                    }
+                    var valorCelular = getQueryParam('celular');
+                    var celularInput = document.getElementById('celular');
+                    if (celularInput && valorCelular) {
+                        celularInput.value = valorCelular;
+                    }
+                });
+                </script>
             </div>
         </div>
 </body>
