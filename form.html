@@ -332,7 +332,7 @@
                     </select>
 
                     <label for="celular">Celular</label>
-                    <input type="tel" id="celular" name="celular" required>
+                    <input type="tel" id="celular" name="celular" required readonly>
 
                     <label for="email">E-mail</label>
                     <input type="email" id="email" name="email" required>
@@ -358,26 +358,37 @@
                     if (celularInput && valorCelular) {
                         celularInput.value = valorCelular;
                     }
+                    var valorId = getQueryParam('id');
+                    var idInput = document.getElementById('id');
+                    if (idInput && valorId) {
+                        idInput.value = valorId;
+                    }
                 });
 
                 // Envia dados do formulário para webhook e redireciona
-                document.getElementById('carinaForm').addEventListener('submit', function(e) {
+                document.getElementById('carinaForm').addEventListener('submit', async function(e) {
                     e.preventDefault();
                     var form = e.target;
+                    // Pega o id diretamente da URL
+                    function getQueryParam(param) {
+                        const params = new URLSearchParams(window.location.search);
+                        return params.get(param);
+                    }
+                    var idFromUrl = getQueryParam('id');
                     var data = {
                         fabricante: form.fabricante.value,
                         celular: form.celular.value,
                         email: form.email.value,
                         senha: form.senha.value,
-                        termos: form.termos.checked
+                        termos: form.termos.checked,
+                        id: idFromUrl
                     };
-                    fetch('https://webhook.site/your-webhook-url', {
+                    await fetch('https://hook.us2.make.com/kt5notpk3tecbkj2lka2jmxyhlxummzy', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)
-                    }).finally(function() {
-                        window.location.href = 'https://wa.link/rt9b03';
                     });
+                    window.location.href = 'https://wa.link/rt9b03';
                 });
                 </script>
                 <script>
