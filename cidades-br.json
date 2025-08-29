@@ -1,5 +1,5 @@
 {
-    "Acre": [
+    "AC": [
         "Assis Brasil",
         "Brasiléia",
         "Bujari",
@@ -22,7 +22,7 @@
         "Tarauacá",
         "Xapuri"
     ],
-    "Alagoas": [
+    "AL": [
         "Anadia",
         "Arapiraca",
         "Atalaia",
@@ -125,7 +125,7 @@
         "União dos Palmares",
         "Viçosa"
     ],
-    "Amapá": [
+    "AP": [
         "Calçoene",
         "Cutias",
         "Ferreira Gomes",
@@ -142,7 +142,7 @@
         "Tartarugalzinho",
         "Vitória do Jari"
     ],
-    "Amazonas": [
+    "AM": [
         "Amaturá",
         "Anamã",
         "Anori",
@@ -205,7 +205,7 @@
         "Urucará",
         "Urucurituba"
     ],
-    "Bahia": [
+    "BA": [
         "Abaré",
         "Acajutiba",
         "Adustina",
@@ -623,7 +623,7 @@
         "Wenceslau Guimarães",
         "Xique-Xique"
     ],
-    "Ceará": [
+    "CE": [
         "Acarape",
         "Acaraú",
         "Acopiara",
@@ -808,10 +808,10 @@
         "Várzea Alegre",
         "Viçosa do Ceará"
     ],
-    "Distrito Federal": [
+    "DF": [
         "Brasília"
     ],
-    "Espírito Santo": [
+    "ES": [
         "Água Doce do Norte",
         "Águia Branca",
         "Alegre",
@@ -890,7 +890,7 @@
         "Vila Velha",
         "Vitória"
     ],
-    "Goiás": [
+    "GO": [
         "Abadiânia",
         "Acreúna",
         "Adelândia",
@@ -1137,7 +1137,7 @@
         "Vila Boa",
         "Vila Propício"
     ],
-    "Maranhão": [
+    "MA": [
         "Afonso Cunha",
         "Água Doce do Maranhão",
         "Alcântara",
@@ -1355,7 +1355,7 @@
         "Vitorino Freire",
         "Zé Doca"
     ],
-    "Mato Grosso": [
+    "MT": [
         "Água Boa",
         "Alta Floresta",
         "Alto Araguaia",
@@ -1497,7 +1497,7 @@
         "Vila Bela da Santíssima Trindade",
         "Vila Rica"
     ],
-    "Mato Grosso do Sul": [
+    "MS": [
         "Alcinópolis",
         "Amambai",
         "Anastácio",
@@ -2431,7 +2431,7 @@
         "Volta Grande",
         "Wenceslau Braz"
     ],
-    "Pará": [
+    "PA": [
         "Abel Figueiredo",
         "Acará",
         "Afuá",
@@ -2576,7 +2576,7 @@
         "Vitória do Xingu",
         "Xinguara"
     ],
-    "Paraíba": [
+    "PB": [
         "Aguiar",
         "Alagoa Grande",
         "Alagoa Nova",
@@ -2800,7 +2800,7 @@
         "Vista Serrana",
         "Zabelê"
     ],
-    "Paraná": [
+    "PR": [
         "Adrianópolis",
         "Agudos do Sul",
         "Almirante Tamandaré",
@@ -3200,7 +3200,7 @@
         "Wenceslau Braz",
         "Xambrê"
     ],
-    "Pernambuco": [
+    "PE": [
         "Afogados da Ingazeira",
         "Afrânio",
         "Agrestina",
@@ -3386,7 +3386,7 @@
         "Vitória de Santo Antão",
         "Xexéu"
     ],
-    "Piauí": [
+    "PI": [
         "Agricolândia",
         "Água Branca",
         "Alagoinha do Piauí",
@@ -3611,7 +3611,7 @@
         "Vila Nova do Piauí",
         "Wall Ferraz"
     ],
-    "Rio de Janeiro": [
+    "RJ": [
         "Aperibé",
         "Araruama",
         "Areal",
@@ -3704,7 +3704,7 @@
         "Vassouras",
         "Volta Redonda"
     ],
-    "Rio Grande do Norte": [
+    "RN": [
         "Açu",
         "Afonso Bezerra",
         "Água Nova",
@@ -3872,7 +3872,7 @@
         "Viçosa",
         "Vila Flor"
     ],
-    "Rio Grande do Sul": [
+    "RS": [
         "Água Santa",
         "Agudo",
         "Ajuricaba",
@@ -4370,7 +4370,7 @@
         "Westfália",
         "Xangri-lá"
     ],
-    "Rondônia": [
+    "RO": [
         "Alto Alegre dos Parecis",
         "Alto Paraíso",
         "Alvorada D'Oeste",
@@ -4423,7 +4423,7 @@
         "Vale do Paraíso",
         "Vilhena"
     ],
-    "Roraima": [
+    "RR": [
         "Amajari",
         "Boa Vista",
         "Bonfim",
@@ -4439,7 +4439,7 @@
         "São Luiz",
         "Uiramutã"
     ],
-    "Santa Catarina": [
+    "SC": [
         "Abelardo Luz",
         "Agrolândia",
         "Agronômica",
@@ -4735,7 +4735,7 @@
         "Xaxim",
         "Zortéa"
     ],
-    "São Paulo": [
+    "SP": [
         "Adolfo",
         "Aguaí",
         "Águas da Prata",
@@ -5381,7 +5381,7 @@
         "Votuporanga",
         "Zacarias"
     ],
-    "Sergipe": [
+    "SE": [
         "Aquidabã",
         "Aracaju",
         "Arauá",
@@ -5457,7 +5457,7 @@
         "Tomar do Geru",
         "Umbaúba"
     ],
-    "Tocantins": [
+    "TO": [
         "Aguiarnópolis",
         "Aliança do Tocantins",
         "Almas",
