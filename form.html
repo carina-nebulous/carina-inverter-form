@@ -262,30 +262,21 @@
         }
 
         select,
-    input[type="email"],
-    input[type="password"],
-    input[type="tel"],
-    input[list][name="estado"],
-    input[list][name="cidade"] {
-        width: 100%;
-        padding: 14px;
-        margin-bottom: 18px;
-        border: 2px solid #6c1e7c;
-        border-radius: 10px;
-        background: rgba(44, 0, 66, 0.8);
-        color: #fff;
-        box-sizing: border-box;
-        font-size: 16px;
-        font-family: 'Montserrat', Arial, sans-serif;
-        transition: border 0.2s, box-shadow 0.2s;
-        appearance: none;
-        -webkit-appearance: none;
-        background-image: url('data:image/svg+xml;utf8,<svg fill="%23a259f7" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-        background-repeat: no-repeat;
-        background-position: right 12px center;
-        background-size: 18px 18px;
-        cursor: pointer;
-    }
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 2px solid #6c1e7c;
+            border-radius: 10px;
+            background: rgba(44, 0, 66, 0.8);
+            color: #fff;
+            box-sizing: border-box;
+            font-size: 16px;
+            font-family: 'Montserrat', Arial, sans-serif;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
 
         select:focus,
         input:focus {
@@ -582,43 +573,42 @@
                 <div style="display: flex; gap: 16px; margin-bottom: 18px;">
                     <div style="flex: 1.9; min-width: 0;">
                         <label for="estado">Estado</label>
-                        <input id="estado" name="estado" list="lista-estados" required style="width: 100%;" autocomplete="off" placeholder="Digite ou selecione...">
-                        <datalist id="lista-estados">
-                            <option value="AC">
-                            <option value="AL">
-                            <option value="AP">
-                            <option value="AM">
-                            <option value="BA">
-                            <option value="CE">
-                            <option value="DF">
-                            <option value="ES">
-                            <option value="GO">
-                            <option value="MA">
-                            <option value="MT">
-                            <option value="MS">
-                            <option value="MG">
-                            <option value="PA">
-                            <option value="PB">
-                            <option value="PR">
-                            <option value="PE">
-                            <option value="PI">
-                            <option value="RJ">
-                            <option value="RN">
-                            <option value="RS">
-                            <option value="RO">
-                            <option value="RR">
-                            <option value="SC">
-                            <option value="SP">
-                            <option value="SE">
-                            <option value="TO">
-                        </datalist>
+                        <select id="estado" name="estado" required style="width: 100%;">
+                            <option value="">Selecione o estado...</option>
+                            <option value="AC">AC</option>
+                            <option value="AL">AL</option>
+                            <option value="AP">AP</option>
+                            <option value="AM">AM</option>
+                            <option value="BA">BA</option>
+                            <option value="CE">CE</option>
+                            <option value="DF">DF</option>
+                            <option value="ES">ES</option>
+                            <option value="GO">GO</option>
+                            <option value="MA">MA</option>
+                            <option value="MT">MT</option>
+                            <option value="MS">MS</option>
+                            <option value="MG">MG</option>
+                            <option value="PA">PA</option>
+                            <option value="PB">PB</option>
+                            <option value="PR">PR</option>
+                            <option value="PE">PE</option>
+                            <option value="PI">PI</option>
+                            <option value="RJ">RJ</option>
+                            <option value="RN">RN</option>
+                            <option value="RS">RS</option>
+                            <option value="RO">RO</option>
+                            <option value="RR">RR</option>
+                            <option value="SC">SC</option>
+                            <option value="SP">SP</option>
+                            <option value="SE">SE</option>
+                            <option value="TO">TO</option>
+                        </select>
                     </div>
                     <div style="flex: 2; min-width: 0;">
                         <label for="cidade">Cidade</label>
-                        <input id="cidade" name="cidade" list="lista-cidades" required style="width: 100%;" autocomplete="off" placeholder="Digite ou selecione...">
-                        <datalist id="lista-cidades">
-                            <!-- As opções de cidades serão preenchidas via JS -->
-                        </datalist>
+                        <select id="cidade" name="cidade" required style="width: 100%;">
+                            <option value="">Selecione o estado primeiro</option>
+                        </select>
                     </div>
                 </div>
 
@@ -640,16 +630,16 @@
                     .then(response => response.json())
                     .then(data => { cidadesPorEstadoCompleto = data; });
 
-                document.getElementById('estado').addEventListener('input', function () {
+                document.getElementById('estado').addEventListener('change', function () {
                     const estado = this.value;
-                    const cidadeInput = document.getElementById('cidade');
-                    const cidadeDatalist = document.getElementById('lista-cidades');
-                    cidadeDatalist.innerHTML = '';
+                    const cidadeSelect = document.getElementById('cidade');
+                    cidadeSelect.innerHTML = '<option value="">Selecione...</option>';
                     if (cidadesPorEstadoCompleto && cidadesPorEstadoCompleto[estado]) {
                         cidadesPorEstadoCompleto[estado].forEach(function (cidade) {
                             const opt = document.createElement('option');
                             opt.value = cidade;
-                            cidadeDatalist.appendChild(opt);
+                            opt.textContent = cidade;
+                            cidadeSelect.appendChild(opt);
                         });
                     }
                 });
@@ -680,25 +670,6 @@
                         const params = new URLSearchParams(window.location.search);
                         return params.get(param);
                     }
-                    // Validação dos campos estado e cidade
-                    var estadoInput = form.estado.value;
-                    var cidadeInput = form.cidade.value;
-                    var estadoValido = false;
-                    var cidadeValida = false;
-                    // Verifica se o estado digitado está na lista
-                    var estados = Array.from(document.getElementById('lista-estados').options).map(opt => opt.value);
-                    if (estados.includes(estadoInput)) {
-                        estadoValido = true;
-                    }
-                    // Verifica se a cidade digitada está na lista
-                    var cidades = Array.from(document.getElementById('lista-cidades').options).map(opt => opt.value);
-                    if (cidades.includes(cidadeInput)) {
-                        cidadeValida = true;
-                    }
-                    if (!estadoValido || !cidadeValida) {
-                        alert('Selecione um estado e uma cidade válidos do dropdown.');
-                        return;
-                    }
                     var idFromUrl = getQueryParam('id');
                     var data = {
                         fabricante: form.fabricante.value,
@@ -708,15 +679,15 @@
                         termos: form.termos.checked,
                         id: idFromUrl,
                         modulos: form.modulos.value,
-                        estado: estadoInput,
-                        cidade: cidadeInput
+                        estado: form.estado.value,
+                        cidade: form.cidade.value
                     };
                     await fetch('https://hook.us2.make.com/kt5notpk3tecbkj2lka2jmxyhlxummzy', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)
                     });
-                    window.location.href = 'https://wa.link/rt9b03';
+                    window.location.href = 'https://wa.link/8p0utz';
                 });
             </script>
             <script>
