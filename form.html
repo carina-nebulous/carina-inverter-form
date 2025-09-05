@@ -262,9 +262,11 @@
         }
 
         select,
-        input[type="email"],
-        input[type="password"],
-        input[type="tel"] {
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    input[list][name="estado"],
+    input[list][name="cidade"] {
             width: 100%;
             padding: 14px;
             margin-bottom: 18px;
@@ -573,42 +575,43 @@
                 <div style="display: flex; gap: 16px; margin-bottom: 18px;">
                     <div style="flex: 1.9; min-width: 0;">
                         <label for="estado">Estado</label>
-                        <select id="estado" name="estado" required style="width: 100%;">
-                            <option value="">Selecione o estado...</option>
-                            <option value="AC">AC</option>
-                            <option value="AL">AL</option>
-                            <option value="AP">AP</option>
-                            <option value="AM">AM</option>
-                            <option value="BA">BA</option>
-                            <option value="CE">CE</option>
-                            <option value="DF">DF</option>
-                            <option value="ES">ES</option>
-                            <option value="GO">GO</option>
-                            <option value="MA">MA</option>
-                            <option value="MT">MT</option>
-                            <option value="MS">MS</option>
-                            <option value="MG">MG</option>
-                            <option value="PA">PA</option>
-                            <option value="PB">PB</option>
-                            <option value="PR">PR</option>
-                            <option value="PE">PE</option>
-                            <option value="PI">PI</option>
-                            <option value="RJ">RJ</option>
-                            <option value="RN">RN</option>
-                            <option value="RS">RS</option>
-                            <option value="RO">RO</option>
-                            <option value="RR">RR</option>
-                            <option value="SC">SC</option>
-                            <option value="SP">SP</option>
-                            <option value="SE">SE</option>
-                            <option value="TO">TO</option>
-                        </select>
+                        <input id="estado" name="estado" list="lista-estados" required style="width: 100%;">
+                        <datalist id="lista-estados">
+                            <option value="AC">
+                            <option value="AL">
+                            <option value="AP">
+                            <option value="AM">
+                            <option value="BA">
+                            <option value="CE">
+                            <option value="DF">
+                            <option value="ES">
+                            <option value="GO">
+                            <option value="MA">
+                            <option value="MT">
+                            <option value="MS">
+                            <option value="MG">
+                            <option value="PA">
+                            <option value="PB">
+                            <option value="PR">
+                            <option value="PE">
+                            <option value="PI">
+                            <option value="RJ">
+                            <option value="RN">
+                            <option value="RS">
+                            <option value="RO">
+                            <option value="RR">
+                            <option value="SC">
+                            <option value="SP">
+                            <option value="SE">
+                            <option value="TO">
+                        </datalist>
                     </div>
                     <div style="flex: 2; min-width: 0;">
                         <label for="cidade">Cidade</label>
-                        <select id="cidade" name="cidade" required style="width: 100%;">
-                            <option value="">Selecione o estado primeiro</option>
-                        </select>
+                        <input id="cidade" name="cidade" list="lista-cidades" required style="width: 100%;">
+                        <datalist id="lista-cidades">
+                            <!-- As opções de cidades serão preenchidas via JS -->
+                        </datalist>
                     </div>
                 </div>
 
@@ -630,16 +633,16 @@
                     .then(response => response.json())
                     .then(data => { cidadesPorEstadoCompleto = data; });
 
-                document.getElementById('estado').addEventListener('change', function () {
+                document.getElementById('estado').addEventListener('input', function () {
                     const estado = this.value;
-                    const cidadeSelect = document.getElementById('cidade');
-                    cidadeSelect.innerHTML = '<option value="">Selecione...</option>';
+                    const cidadeInput = document.getElementById('cidade');
+                    const cidadeDatalist = document.getElementById('lista-cidades');
+                    cidadeDatalist.innerHTML = '';
                     if (cidadesPorEstadoCompleto && cidadesPorEstadoCompleto[estado]) {
                         cidadesPorEstadoCompleto[estado].forEach(function (cidade) {
                             const opt = document.createElement('option');
                             opt.value = cidade;
-                            opt.textContent = cidade;
-                            cidadeSelect.appendChild(opt);
+                            cidadeDatalist.appendChild(opt);
                         });
                     }
                 });
